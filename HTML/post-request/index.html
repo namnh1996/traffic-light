@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <Title>Todo-List</Title>
+    </head>
+    <body>
+        <input type="text" id="new-input">
+        <button id="add-btn">Add</button>
+
+        <div>
+            <ul id="todo-list">
+
+            </ul>
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>;
+        <script type="text/javascript">
+            let url = 'http://localhost:3004/todos';
+            axios.get(url).then(function(res){
+                let items = res.data;
+                //console.log(items);
+                render(items);
+            })
+            let addBtn = document.getElementById('add-btn');
+            let input = document.getElementById('new-input');
+            input.value = sessionStorage.getItem('draft');
+            //addBtn.onclick = addItem;
+            addBtn.addEventListener('click', addItem);
+            input.addEventListener('change', updateSessionStorage);
+            
+            function updateSessionStorage(){
+                sessionStorage.setItem('draft', input.value);
+            }
+
+            function addItem(){
+                let newItem = {
+                    content: input.value
+                };
+                //add todoList arr
+                axios.post(url,newItem).then(function(item){
+                    //console.log('Item saved!', item);
+                    input.value = '';
+                    sessionStorage.setItem('draft', input.value);
+                    axios.get(url).then(function(res){
+                        let items = res.data;
+                        //console.log(items);
+                        render(items);
+            })
+                })
+                
+            };
+            function render(items){
+                let htmlList = document.getElementById('todo-list');
+                let content = items.map((item) => {
+                return '<li>' + item.content + '</li>';
+                });
+                let newContent = content.join('');
+                htmlList.innerHTML = newContent;
+            }
+            //render();
+            
+        </script>
+    </body>
+</html>
