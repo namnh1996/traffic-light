@@ -1,0 +1,35 @@
+.TodoItem{
+    font-family: '';
+    font-weight: 300;
+    font-size: 24px;
+    color: black;
+    border-bottom: 1px solid black;
+    display: flex;
+}   
+
+.TodoItem > p {
+    margin: 0;
+    padding: 10px 0 10px 50px;
+}
+
+.TodoItem > img {
+    padding-left: 10px;
+}
+
+.TodoItem:last-child{
+    border-bottom: none;
+}
+
+.TodoItem-complete > p{
+    text-decoration: line-through;
+    opacity: .3;
+}
+#root {
+    display: flex;
+    justify-content: center;
+}
+.App {
+    width: 40%;
+    align-items: center;
+    border: 1px solid black;
+}
